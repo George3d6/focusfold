@@ -1,5 +1,6 @@
 import h5py
 import torch
+import numpy as np
 
 from ranger import Ranger
 
@@ -231,12 +232,18 @@ for epoch in range(200):
 
         running_loss += loss.item()
 
-        if index % 100 == 0:
+        if index % 500 == 0:
+            evals = []
             for validation_batch in validation_data_loader:
                 X, Y, mask = validation_batch
                 X = X.to(device)
                 Y = Y.to(device)
-                evaluate(Y[i], Yp[i], mask[i])
+                for i in range(len(Y)):
+                    eval = evaluate(Y[i], Yp[i], mask[i])
+                    evals.append(eval)
+                break
+            eval_score = np.mean(evals)
+            print(f'Mean evaluation score of: {eval_score}')
             print(f'Batch number: {index}, epoch number: {epoch}')
             print(f'Mean running loss of: ' + str(running_loss/(index+1)))
             print(f'Loss of: ' + str(loss.item()))
