@@ -201,7 +201,8 @@ def evaluate(Y, Yp, mask):
             else:
                 incorr += 1
     print(f'Got {corr} values right and {incorr} values incorrect')
-    return eval
+
+    return corr/(corr + incorr)
 
 for epoch in range(200):
     running_loss = 0
