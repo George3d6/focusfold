@@ -1,0 +1,4 @@
+biopython<=1.71.0
+PeptideBuilder
+h5py
+nerf
